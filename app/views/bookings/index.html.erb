@@ -1,0 +1,14 @@
+<h1>calendrier des disponibilités</h1>
+
+<p>nombre d'appartements disponibles :  <%= @bookings.size %></p>
+
+<br>
+<ul>
+  <% @bookings.each do |booking| %>
+    <li> <%= link_to "appartement", booking_path(booking)  %> <%= booking.listing_id %> <%= booking.start_date.strftime('%a %d %b %Y') %> - <%= booking.end_date.strftime('%a %d %b %Y') %></li>
+  <% end %>
+</ul>
+
+
+
+<%= link_to "nouvelle disponibilité",new_booking_path  %>
