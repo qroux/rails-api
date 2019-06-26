@@ -7,3 +7,5 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 Listing.create(num_rooms: 3)
 Listing.create(num_rooms: 5)
+Listing.create(num_rooms: 100)
+Listing.create(num_rooms: 200)

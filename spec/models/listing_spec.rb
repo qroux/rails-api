@@ -18,6 +18,13 @@ RSpec.describe Listing, type: :model do
     expect(Listing.count).to eq(0)
   end
 
+  it "association: Listing destruction works with booking associated" do
+    Listing.create(num_rooms: 2)
+    Booking.create(listing_id: Listing.last.id, start_date: Date.today, end_date: Date.tomorrow)
+    Listing.last.destroy
+    expect(Listing.count).to eq(0)
+  end
+
   it "validation: Listing without num_rooms should fail" do
     Listing.create
     expect(Listing.count).to eq(0)
