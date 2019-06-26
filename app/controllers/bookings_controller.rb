@@ -4,7 +4,7 @@ class BookingsController < ApplicationController
   end
 
   def show
-    @booking = Booking.find(params[:id])
+    find_booking
   end
 
   def new
@@ -22,9 +22,17 @@ class BookingsController < ApplicationController
   end
 
   def edit
+    find_booking
   end
 
   def update
+    find_booking
+    @booking.update(booking_params)
+    if @booking.save
+      redirect_to booking_path(@booking)
+    else
+      render :edit
+    end
   end
 
   def destroy
@@ -34,5 +42,9 @@ class BookingsController < ApplicationController
 
   def booking_params
     params.require(:booking).permit(:listing_id, :start_date, :end_date)
+  end
+
+  def find_booking
+    @booking = Booking.find(params[:id])
   end
 end

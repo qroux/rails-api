@@ -3,3 +3,6 @@
 
 <p>reservé du: <%= @booking.start_date.strftime('%a %d %b %Y')  %> </p>
 <p>au : <%= @booking.end_date.strftime('%a %d %b %Y')  %> </p>
+
+
+<%= link_to "modifier les dates", edit_booking_path(@booking)  %>

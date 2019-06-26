@@ -5,7 +5,7 @@
 <br>
 <ul>
   <% @bookings.each do |booking| %>
-    <li> <%= link_to "appartement", booking_path(booking)  %> <%= booking.listing_id %> <%= booking.start_date %> - <%= booking.end_date %></li>
+    <li> <%= link_to "appartement", booking_path(booking)  %> <%= booking.listing_id %> <%= booking.start_date.strftime('%a %d %b %Y') %> - <%= booking.end_date.strftime('%a %d %b %Y') %></li>
   <% end %>
 </ul>
 
