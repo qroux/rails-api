@@ -1,5 +1,5 @@
 <h1>Mon appartement: <%= @booking.listing_id %> </h1>
 
 
-<p>reservé du: <%= @booking.start_date %> </p>
-<p>au : <%= @booking.end_date %> </p>
+<p>reservé du: <%= @booking.start_date.strftime('%a %d %b %Y')  %> </p>
+<p>au : <%= @booking.end_date.strftime('%a %d %b %Y')  %> </p>
