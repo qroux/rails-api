@@ -1,6 +1,6 @@
-<p>Je rend mon appartement disponible pour la durée suivante</p>
+<p>Je souhaite reserver :</p>
 
-<%= simple_form_for(@booking) do |f| %>
+<%= simple_form_for(@reservation) do |f| %>
   <%= f.label "appartement" %>
   <%= f.input :listing_id, collection: @listings %>
   <%= f.label "from" %>

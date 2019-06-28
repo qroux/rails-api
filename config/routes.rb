@@ -3,4 +3,7 @@ Rails.application.routes.draw do
 
   resources :bookings, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
   end
+
+  resources :reservations, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
+  end
 end

@@ -1,0 +1,8 @@
+<h1>Numero de l'appartement loué: <%= @reservation.listing_id %> </h1>
+
+
+<p>reservé du: <%= @reservation.start_date.strftime('%a %d %b %Y')  %> </p>
+<p>au : <%= @reservation.end_date.strftime('%a %d %b %Y')  %> </p>
+
+
+<%= link_to "modifier les dates", edit_reservation_path(reservation)  %>
