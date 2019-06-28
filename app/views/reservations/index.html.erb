@@ -1,0 +1,14 @@
+<h1>calendrier des reservations</h1>
+
+<p>nombre de réservations en cours :  <%= @reservations.size %></p>
+
+<br>
+<ul>
+  <% @reservations.each do |reservation| %>
+    <li> <%= link_to "réservation", reservation_path(reservation)  %> <%= reservation.listing_id %> <%= reservation.start_date.strftime('%a %d %b %Y') %> - <%= reservation.end_date.strftime('%a %d %b %Y') %></li>
+  <% end %>
+</ul>
+
+
+
+<%= link_to "nouvelle réservation",new_reservation_path  %>
