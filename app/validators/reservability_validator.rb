@@ -20,22 +20,16 @@ class ReservabilityValidator < ActiveModel::EachValidator
     # 2 conditions to create a reservation:
     # current reservation range must be included in the booking range
     bookings_date_ranges.each do |range|
-      unless record.start_date.between?(range.first, range.last)
-        record.errors.add(attribute, "booking not available for this start_date")
-      end
-      unless record.end_date.between?(range.first, range.last)
-        record.errors.add(attribute, "booking not available for this end_date")
+      unless record.start_date.between?(range.first, range.last) && record.end_date.between?(range.first, range.last)
+        record.errors.add(attribute, "booking not available for this start_date/end_date")
       end
     end
 
     # there is no previous reservation for the same range
     # interscetion case
     reservations_date_ranges.each do |range|
-      if record.start_date.between?(range.first, range.last)
-        record.errors.add(attribute, "already reserved for this start_date")
-      end
-      if record.end_date.between?(range.first, range.last)
-        record.errors.add(attribute, "already reserved for this end_date")
+      if record.start_date.between?(range.first, range.last) || record.end_date.between?(range.first, range.last)
+        record.errors.add(attribute, "already reserved for this start_date/end_date")
       end
     end
 
