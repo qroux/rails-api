@@ -9,11 +9,12 @@ class BookingsController < ApplicationController
 
   def new
     @booking = Booking.new
-    @listings = Listing.all
+    listings
   end
 
   def create
     @booking = Booking.new(booking_params)
+    listings
     if @booking.save
       redirect_to bookings_path
     else
@@ -27,6 +28,7 @@ class BookingsController < ApplicationController
 
   def update
     find_booking
+    listings
     @booking.update(booking_params)
     if @booking.save
       redirect_to booking_path(@booking)
@@ -46,5 +48,9 @@ class BookingsController < ApplicationController
 
   def find_booking
     @booking = Booking.find(params[:id])
+  end
+
+  def listings
+    @listings = Listing.all
   end
 end

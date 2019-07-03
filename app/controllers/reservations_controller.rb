@@ -9,11 +9,12 @@ class ReservationsController < ApplicationController
 
   def new
     @reservation = Reservation.new
-    @listings = Listing.all
+    listings
   end
 
   def create
     @reservation = Reservation.new(reservation_params)
+    listings #fix simple form listing dropdown content bug when render :new
     if @reservation.save
       redirect_to reservations_path
     else
@@ -23,13 +24,15 @@ class ReservationsController < ApplicationController
 
   def edit
     find_reservation
+    listings
   end
 
   def update
-    find_booking
-    @booking.update(booking_params)
-    if @booking.save
-      redirect_to booking_path(@booking)
+    find_reservation
+    listings #fix simple form listing dropdown content bug when render :edit
+    @reservation.update(reservation_params)
+    if @reservation.save
+      redirect_to reservation_path(@reservation)
     else
       render :edit
     end
@@ -44,7 +47,11 @@ class ReservationsController < ApplicationController
     params.require(:reservation).permit(:listing_id, :start_date, :end_date)
   end
 
-  def find_booking
+  def find_reservation
     @reservation = Reservation.find(params[:id])
+  end
+
+  def listings
+    @listings = Listing.all
   end
 end

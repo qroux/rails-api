@@ -5,4 +5,4 @@
 <p>au : <%= @reservation.end_date.strftime('%a %d %b %Y')  %> </p>
 
 
-<%= link_to "modifier les dates", edit_reservation_path(reservation)  %>
+<%= link_to "modifier les dates", edit_reservation_path(@reservation)  %>

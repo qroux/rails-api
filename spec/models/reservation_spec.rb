@@ -8,6 +8,18 @@ RSpec.describe Reservation, type: :model do
     expect(Reservation.count).to eq(1)
   end
 
+  it "CREATE: reservations for a different listing but same date should work" do
+    Listing.create(num_rooms: 10)
+    Booking.create(listing_id: Listing.last.id, start_date: Date.today, end_date: Date.tomorrow)
+    Reservation.create(listing_id: Listing.last.id, start_date: Date.today, end_date: Date.tomorrow)
+
+    Listing.create(num_rooms: 5)
+    Booking.create(listing_id: Listing.last.id, start_date: Date.today, end_date: Date.tomorrow)
+    Reservation.create(listing_id: Listing.last.id, start_date: Date.today, end_date: Date.tomorrow)
+
+    expect(Reservation.count).to eq(2)
+  end
+
   it "validation: Reservation should fail if start_date > end_date" do
     Listing.create(num_rooms: 10)
     Booking.create(listing_id: Listing.last.id, start_date: Date.new(2019,8,1), end_date: Date.new(2019,8,5))
@@ -37,6 +49,14 @@ RSpec.describe Reservation, type: :model do
     Reservation.create(listing_id: Listing.last.id, start_date: Date.new(2019,8,3), end_date: Date.new(2019,8,9))
     Reservation.create(listing_id: Listing.last.id, start_date: Date.new(2019,8,4), end_date: Date.new(2019,8,6))
     expect(Reservation.count).to eq(1)
+  end
+
+  it "XXXXXXreservability: Reservation should work if start_date = end_date of another previous reservation" do
+    Listing.create(num_rooms: 10)
+    Booking.create(listing_id: Listing.last.id, start_date: Date.new(2019,8,1), end_date: Date.new(2019,8,30))
+    Reservation.create(listing_id: Listing.last.id, start_date: Date.new(2019,8,1), end_date: Date.new(2019,8,7))
+    Reservation.create(listing_id: Listing.last.id, start_date: Date.new(2019,8,7), end_date: Date.new(2019,8,10))
+    expect(Reservation.count).to eq(2)
   end
 
   it "UPDATE : Reservation update should work" do
@@ -81,4 +101,5 @@ RSpec.describe Reservation, type: :model do
     Listing.last.destroy
     expect(Reservation.count).to eq(0)
   end
+
 end

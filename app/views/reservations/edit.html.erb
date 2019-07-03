@@ -1,0 +1,11 @@
+<p>Je souhaite modifier ma réservation :</p>
+
+<%= simple_form_for(@reservation) do |f| %>
+  <%= f.label "appartement" %>
+  <%= f.input :listing_id, collection: @listings %>
+  <%= f.label "from" %>
+  <%= f.date_field :start_date, min: Date.today, label: "From" %>
+  <%= f.label "to" %>
+  <%= f.date_field :end_date, min: Date.today, label: "From" %>
+  <%= f.submit "book"%>
+<% end %>

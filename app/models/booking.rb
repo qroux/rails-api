@@ -1,8 +1,13 @@
 class Booking < ApplicationRecord
   belongs_to :listing
 
-  validates :start_date, :end_date, presence: true, availability: true
   validate :end_date_after_start_date
+
+  # with validates_overlap gem
+  validates :start_date, :end_date, presence: true, overlap: { scope: "listing_id", exclude_edges: ["start_date", "end_date"] }
+
+  # with custom validator
+  # validates :start_date, :end_date, presence: true, availability: true
 
   private
 
