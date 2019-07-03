@@ -38,6 +38,8 @@ class BookingsController < ApplicationController
   end
 
   def destroy
+    find_booking
+    @booking.destroy
   end
 
   private
