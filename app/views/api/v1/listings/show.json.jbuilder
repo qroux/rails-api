@@ -1,1 +1,1 @@
-json.extract! @listing, :id, :num_rooms
+json.listing @listing, :id, :num_rooms
