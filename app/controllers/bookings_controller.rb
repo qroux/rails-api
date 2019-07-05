@@ -1,20 +1,22 @@
 class BookingsController < ApplicationController
+  before_action :find_booking, only: [:show, :edit, :update, :destroy]
+  before_action :listings, only: [:new, :create, :update]
+
   def index
     @bookings = Booking.all
   end
 
   def show
-    find_booking
   end
 
   def new
     @booking = Booking.new
-    listings
   end
 
   def create
     @booking = Booking.new(booking_params)
-    listings
+    @booking.previous_start_date = @booking.start_date
+    @booking.previous_end_date = @booking.end_date
     if @booking.save
       redirect_to bookings_path
     else
@@ -23,12 +25,9 @@ class BookingsController < ApplicationController
   end
 
   def edit
-    find_booking
   end
 
   def update
-    find_booking
-    listings
     @booking.update(booking_params)
     if @booking.save
       redirect_to booking_path(@booking)
@@ -38,8 +37,9 @@ class BookingsController < ApplicationController
   end
 
   def destroy
-    find_booking
-    @booking.destroy
+    if @booking.destroy
+      redirect_to bookings_path
+    end
   end
 
   private

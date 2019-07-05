@@ -1,6 +1,6 @@
 <p>Je change ma disponibilité</p>
 
-<%= simple_form_for([@developer, @booking]) do |f| %>
+<%= simple_form_for(@booking) do |f| %>
   <%= f.label "from" %>
   <%= f.date_field :start_date, min: Date.today, label: "From" %>
   <%= f.label "to" %>

@@ -1,0 +1,6 @@
+<p>J'enregistre mon bien</p>
+
+<%= simple_form_for(@listing) do |f| %>
+  <%= f.input :num_rooms, min: 0, label: "nombre de chambres" %>
+  <%= f.submit "modifier"%>
+<% end %>

@@ -51,7 +51,7 @@ RSpec.describe Reservation, type: :model do
     expect(Reservation.count).to eq(1)
   end
 
-  it "XXXXXXreservability: Reservation should work if start_date = end_date of another previous reservation" do
+  it "reservability: Reservation should work if start_date = end_date of another previous reservation" do
     Listing.create(num_rooms: 10)
     Booking.create(listing_id: Listing.last.id, start_date: Date.new(2019,8,1), end_date: Date.new(2019,8,30))
     Reservation.create(listing_id: Listing.last.id, start_date: Date.new(2019,8,1), end_date: Date.new(2019,8,7))
@@ -101,5 +101,4 @@ RSpec.describe Reservation, type: :model do
     Listing.last.destroy
     expect(Reservation.count).to eq(0)
   end
-
 end
