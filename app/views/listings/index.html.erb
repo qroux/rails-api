@@ -1,0 +1,14 @@
+<h1>Liste des biens</h1>
+
+<p>nombre de biens enregistrés :  <%= @listings.size %></p>
+
+<br>
+<ul>
+  <% @listings.each do |listing| %>
+    <li> <%= link_to "le bien", listing_path(listing)  %> <%= link_to "delete", listing_path(listing), method: :delete  %> <%= listing.id %> nombre de pièces: <%= listing.num_rooms  %></li>
+  <% end %>
+</ul>
+
+
+
+<%= link_to "nouveau bien",new_listing_path  %>

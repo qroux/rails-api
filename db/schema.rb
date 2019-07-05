@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_27_165014) do
+ActiveRecord::Schema.define(version: 2019_07_04_083910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 2019_06_27_165014) do
     t.bigint "listing_id"
     t.date "start_date"
     t.date "end_date"
+    t.date "previous_start_date"
+    t.date "previous_end_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["listing_id"], name: "index_bookings_on_listing_id"
@@ -28,6 +30,16 @@ ActiveRecord::Schema.define(version: 2019_06_27_165014) do
     t.integer "num_rooms"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "missions", force: :cascade do |t|
+    t.bigint "listing_id"
+    t.string "mission_type"
+    t.integer "price"
+    t.date "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["listing_id"], name: "index_missions_on_listing_id"
   end
 
   create_table "reservations", force: :cascade do |t|
@@ -40,5 +52,6 @@ ActiveRecord::Schema.define(version: 2019_06_27_165014) do
   end
 
   add_foreign_key "bookings", "listings"
+  add_foreign_key "missions", "listings"
   add_foreign_key "reservations", "listings"
 end
