@@ -53,14 +53,14 @@ class Reservation < ApplicationRecord
       mission_type: 'checkout_checkin'
     )
 
-    # if booking exists,it provides booking.end_date and implies an
+    # if booking exists at self.end_date,it provides booking.end_date and implies an
     # already existing last_checkout for this date
     booking = Booking.find_by(
       end_date: end_date,
       listing_id: listing.id
     )
 
-    # last_checkout overlap case
+    # last_checkout overlap case -> destroy instead of update
     if !checkout_checkin.nil? && !booking.nil?
       checkout_checkin.destroy
     end
