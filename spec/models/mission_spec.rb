@@ -11,7 +11,7 @@ RSpec.describe Mission, type: :model do
     expect(Mission.count).to eq(2)
   end
 
-  it "UPDATE: booking_missions must update first_checkin when Booking is updated" do
+  it "UPDATE: booking.update must update first_checkin" do
     Listing.create(num_rooms: 10)
     Booking.create(
       listing_id: Listing.last.id,
@@ -45,7 +45,7 @@ RSpec.describe Mission, type: :model do
     expect(new_first.date).to eq(Date.today + 2)
   end
 
-  it "UPDATE: booking_missions must update last_checkout when Booking is updated" do
+  it "UPDATE: booking.update must update last_checkout" do
     Listing.create(num_rooms: 10)
     Booking.create(
       listing_id: Listing.last.id,
@@ -65,7 +65,7 @@ RSpec.describe Mission, type: :model do
     expect(book.end_date).to eq(last_checkout.date)
   end
 
-  it "UPDATE: booking_missions must update first_checkin && last_checkout when Booking is updated" do
+  it "UPDATE: booking.update must update first_checkin && last_checkout" do
     Listing.create(num_rooms: 10)
     Booking.create(
       listing_id: Listing.last.id,
@@ -106,24 +106,45 @@ RSpec.describe Mission, type: :model do
     expect(Mission.count).to eq(0)
   end
 
-  it "CREATE: reservation_missions must create checkin_checkout when Reservation is created" do
+  it "DESTROY + association: first_checkin + last_checkout should be destroyed when Listing is destroyed" do
     Listing.create(num_rooms: 10)
     Booking.create(
       listing_id: Listing.last.id,
       start_date: Date.today,
-      end_date: (Date.today + 7)
+      end_date: Date.tomorrow
     )
+
     expect(Mission.count).to eq(2)
 
-    Reservation.create(
-      listing_id: Listing.last.id,
-      start_date: Date.today,
-      end_date: (Date.today + 7)
-    )
-    expect(Mission.count).to eq(3)
+    Listing.last.destroy
+
+    expect(Listing.count).to eq(0)
+    expect(Booking.count).to eq(0)
+    expect(Mission.count).to eq(0)
   end
 
-  it "XXXXXCREATE: reservation_missions should not create extra checkin_checkout when last_checkout already exists" do
+  it "CREATE: reservation.create must create checkout_checkin" do
+    Listing.create(num_rooms: 10)
+    Booking.create(
+      listing_id: Listing.last.id,
+      start_date: Date.today,
+      end_date: (Date.today + 7)
+    )
+    expect(Mission.count).to eq(2)
+    expect(Mission.first.mission_type).to eq('first_checkin')
+    expect(Mission.last.mission_type).to eq('last_checkout')
+
+    Reservation.create(
+      listing_id: Listing.last.id,
+      start_date: Date.today,
+      end_date: (Date.today + 5)
+    )
+    expect(Mission.count).to eq(3)
+    expect(Mission.last.date).to eq(Reservation.last.end_date)
+    expect(Mission.last.mission_type).to eq('checkout_checkin')
+  end
+
+  it "CREATE: reservation.create should not create extra checkout_checkin when last_checkout already exists" do
     Listing.create(num_rooms: 10)
     Booking.create(
       listing_id: Listing.last.id,
@@ -137,6 +158,6 @@ RSpec.describe Mission, type: :model do
       start_date: Date.today,
       end_date: (Date.today + 7)
     )
-    expect(Mission.count).to eq(16)
+    expect(Mission.count).to eq(2)
   end
 end

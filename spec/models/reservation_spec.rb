@@ -63,8 +63,11 @@ RSpec.describe Reservation, type: :model do
     Listing.create(num_rooms: 10)
     Booking.create(listing_id: Listing.last.id, start_date: Date.new(2019,8,1), end_date: Date.new(2019,8,10))
     Reservation.create(listing_id: Listing.last.id, start_date: Date.new(2019,8,2), end_date: Date.new(2019,8,5))
+
     Reservation.last.update(end_date: Date.new(2019,8,9))
+    expect(Reservation.count).to eq(1)
     expect(Reservation.last.end_date).to eq(Date.new(2019,8,9))
+    expect(Mission.count).to eq(3)
   end
 
   it "UPDATE : Reservation update should work if already reserved at another date(no inclusion nor intersection)" do
@@ -72,8 +75,12 @@ RSpec.describe Reservation, type: :model do
     Booking.create(listing_id: Listing.last.id, start_date: Date.new(2019,8,1), end_date: Date.new(2019,8,31))
     Reservation.create(listing_id: Listing.last.id, start_date: Date.new(2019,8,15), end_date: Date.new(2019,8,20))
     Reservation.create(listing_id: Listing.last.id, start_date: Date.new(2019,8,2), end_date: Date.new(2019,8,10))
+
     Reservation.last.update(end_date: Date.new(2019,8,13))
+    expect(Reservation.count).to eq(2)
     expect(Reservation.last.end_date).to eq(Date.new(2019,8,13))
+    expect(Mission.count).to eq(4)
+    expect(Mission.last.mission_type).to eq('checkout_checkin')
   end
 
   it "UPDATE + reservability: Reservation update should fail if already reserved(intersection)" do
@@ -81,6 +88,7 @@ RSpec.describe Reservation, type: :model do
     Booking.create(listing_id: Listing.last.id, start_date: Date.new(2019,8,1), end_date: Date.new(2019,8,15))
     Reservation.create(listing_id: Listing.last.id, start_date: Date.new(2019,8,6), end_date: Date.new(2019,8,9))
     Reservation.create(listing_id: Listing.last.id, start_date: Date.new(2019,8,2), end_date: Date.new(2019,8,5))
+
     Reservation.last.update(end_date: Date.new(2019,8,8))
     expect(Reservation.last.end_date).to eq(Date.new(2019,8,5))
   end

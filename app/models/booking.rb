@@ -55,8 +55,8 @@ class Booking < ApplicationRecord
     )
 
     # actual update with self.start/end_date
-    first_checkin.update(date: start_date) #if start_date != first_checkin.date
-    last_checkout.update(date: end_date) #if end_date != checkout_checkin.date
+    first_checkin.update(date: start_date)
+    last_checkout.update(date: end_date)
   end
 
   def remove_missions
