@@ -30,15 +30,29 @@ RSpec.describe Listing, type: :model do
 
   it "association: Listing destruction works with booking associated" do
     Listing.create(num_rooms: 2)
-    Booking.create(listing_id: Listing.last.id, start_date: Date.today, end_date: Date.tomorrow)
+    Booking.create(
+      listing_id: Listing.last.id,
+      start_date: Date.today,
+      end_date: Date.tomorrow
+    )
+
     Listing.last.destroy
     expect(Listing.count).to eq(0)
   end
 
   it "association: Listing destruction works with reservation associated" do
     Listing.create(num_rooms: 2)
-    Booking.create(listing_id: Listing.last.id, start_date: Date.new(2019,8,1), end_date: Date.new(2019,8,8))
-    Reservation.create(listing_id: Listing.last.id, start_date: Date.new(2019,8,4), end_date: Date.new(2019,8,5))
+    Booking.create(
+      listing_id: Listing.last.id,
+      start_date: Date.new(2019,8,1),
+      end_date: Date.new(2019,8,8)
+    )
+    Reservation.create(
+      listing_id: Listing.last.id,
+      start_date: Date.new(2019,8,4),
+      end_date: Date.new(2019,8,5)
+    )
+
     Listing.last.destroy
     expect(Listing.count).to eq(0)
   end

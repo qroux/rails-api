@@ -1,0 +1,7 @@
+<h3>Liste des missions</h3>
+
+
+<% @missions.each do |mission|%>
+<p>date: <%= mission.date %> appartement: <%= mission.listing.id %> type: <%= mission.mission_type %></p>
+
+<% end %>
