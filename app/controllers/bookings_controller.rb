@@ -15,8 +15,6 @@ class BookingsController < ApplicationController
 
   def create
     @booking = Booking.new(booking_params)
-    @booking.previous_start_date = @booking.start_date
-    @booking.previous_end_date = @booking.end_date
     if @booking.save
       redirect_to bookings_path
     else

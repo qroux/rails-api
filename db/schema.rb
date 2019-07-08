@@ -19,8 +19,6 @@ ActiveRecord::Schema.define(version: 2019_07_04_083910) do
     t.bigint "listing_id"
     t.date "start_date"
     t.date "end_date"
-    t.date "previous_start_date"
-    t.date "previous_end_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["listing_id"], name: "index_bookings_on_listing_id"
