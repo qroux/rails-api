@@ -1,1 +1,1 @@
-json.booking @booking, :id, :start_date, :end_date
+json.booking @booking, :id, :listing_id, :start_date, :end_date
